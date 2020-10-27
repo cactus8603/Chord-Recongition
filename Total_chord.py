@@ -60,5 +60,9 @@ def getAns(path):
 
 
 if __name__ == "__main__":
-    # print(getDict_Chord())
+
+    # getDict_Chord()
+    path = ""
+    # path = ".\\data\\1\\ground_truth.txt"
+    # getAns()
   
