@@ -1,11 +1,11 @@
 import numpy as np
 import json
 import librosa
+from total_chord import *
 
 def getData(feature_path):
     with open(feature_path, 'r') as f:
         json_data = json.load(f)
-    f.close()
 
     # chroma = np.array(json_data['chroma_stft'])
     chroma = np.array(json_data['chroma_cqt'])
@@ -67,8 +67,7 @@ def chord_reg(chroma, sort, order, loss_rate):
     tmp = chroma[(sort[order]+3)%12][order]
     tmp1 = chroma[(sort[order]+4)%12][order]
     tmp_average = tmp_sum/12
-    N_or_not = (tmp_sum - chroma[sort[order]][order]) / 9
-    # - chroma[(sort[order]-1)%12][order] - chroma[(sort[order]+1)%12][order]
+    # N_or_not = (tmp_sum - chroma[sort[order]][order]) / 9
     loss = abs(tmp_average - tmp) / tmp_average
     loss1 = abs(tmp_average - tmp1) / tmp_average
     # loss = abs(N_or_not - tmp) / N_or_not
@@ -99,13 +98,15 @@ def chord_reg(chroma, sort, order, loss_rate):
 
 
 if __name__ == "__main__" :
-    feature_path = "./data/sample/17/feature.json"
+    
+    feature_path = "./data/1/feature.json"
     chroma, sort, times = getData(feature_path)
     for i in range (1675,1690):
         print(i, chord_reg(chroma, sort, i, 0))
         # print(i, chord_reg(chroma, sort, i, 0.05), chroma[(sort[i]+3)%12][i], chroma[(sort[i]+4)%12][i])
     
     # print(chord_reg(chroma, sort, 2746, 0.4))
-
-
+    
+    dict_chord = getDict_Chord()
+    print(dict_chord)
 
