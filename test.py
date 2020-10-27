@@ -12,7 +12,10 @@ def getData(feature_path):
 
     # chroma = librosa.decompose.nn_filter(chroma, aggregate=np.median, metric='cosine')
     # chroma = librosa.decompose.nn_filter(chroma, aggregate=np.average)
-
+    length = len(chroma[0])
+    times = librosa.times_like(length)
+    np.savetxt("data/times.txt", times , delimiter=",")
+    
     tmp = np.array([[chroma[0]],
                     [chroma[1]],
                     [chroma[2]],
@@ -32,10 +35,10 @@ def getData(feature_path):
     # sort = np.argmax(data, axis=1)
     # print(np.shape(sort))
     sort = np.argmax(tmp, axis=0)
-    sort = np.reshape(sort, (8673,))
+    sort = np.reshape(sort, (length,))
     # print(sort)
     # print(np.shape(sort))
-    return chroma, sort
+    return chroma, sort, times
 
 def chord_reg(chroma, sort, order, loss_rate):
     chord_dict = {
@@ -96,9 +99,9 @@ def chord_reg(chroma, sort, order, loss_rate):
 
 
 if __name__ == "__main__" :
-    feature_path = "./audio/feature.json"
-    chroma, sort = getData(feature_path)
-    for i in range (8480,8673):
+    feature_path = "./data/sample/17/feature.json"
+    chroma, sort, times = getData(feature_path)
+    for i in range (1675,1690):
         print(i, chord_reg(chroma, sort, i, 0))
         # print(i, chord_reg(chroma, sort, i, 0.05), chroma[(sort[i]+3)%12][i], chroma[(sort[i]+4)%12][i])
     
