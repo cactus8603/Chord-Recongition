@@ -7,8 +7,8 @@ def getDict_Chord():
 
     data = np.array(['N'])
     for i in range(1,201):
-        path = "D:\\others\\桌面\\project\\ai-cup\\CE200\\CE200\\" + str(i) + "\\ground_truth.txt"
-        # path = ""
+        # path = "D:\\others\\桌面\\project\\ai-cup\\CE200\\CE200\\" + str(i) + "\\ground_truth.txt"
+        path = "D:\\system\\Desktop\\project\\CE200\\CE200\\" + str(i) + "\\ground_truth.txt"
         with open(path, "r") as f:
             for lines in f.readlines():
                 lines = lines.rstrip('\n').rstrip(' ')
@@ -56,6 +56,8 @@ def getAns(path):
             data['chord'] = np.append(data['chord'], lines[pos_chord+1:])
 
     return data
+
+
     
 
 
